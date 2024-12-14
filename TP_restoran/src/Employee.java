@@ -14,11 +14,25 @@ public abstract class Employee {
         this.nextEmployee = next;
     }
 
-    public void performTask(String task) {
-        if (nextEmployee != null) {
+    public void performTask(Command task) {
+        if (canHandleTask(task)) {
+            task.execute();
+        } else if (nextEmployee != null) {
+            System.out.println(name + " " + role + " не может выполнить задачу, передаёт её дальше.");
             nextEmployee.performTask(task);
         } else {
-            System.out.println("Поручение \"" + task + "\" не может быть выполнено никем в цепочке.");
+            System.out.println("Задача не может быть выполнена.");
         }
     }
+
+
+    protected abstract boolean canHandleTask(Command task);
+
+//    public void performTask(String task) {
+//        if (nextEmployee != null) {
+//            nextEmployee.performTask(task);
+//        } else {
+//            System.out.println("Поручение \"" + task + "\" не может быть выполнено никем в цепочке.");
+//        }
+//    }
 }
